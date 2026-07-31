@@ -1,6 +1,7 @@
 import json
 from datetime import datetime
 import urllib.request
+import urllib.parse
 
 
 DATA_FILE = "data.json"
@@ -25,38 +26,56 @@ def save_data(data):
 
 
 
-def get_tefas_data():
+def get_tefas_funds():
 
     """
-    TEFAS veri bağlantısı için başlangıç bölümü.
-    Veri alınamadığında boş liste döndürür.
+    TEFAS fon sorgusu için temel bağlantı.
     """
 
     try:
 
-        url = "https://www.tefas.gov.tr"
+        url = "https://www.tefas.gov.tr/api/DB/BindHistoryInfo"
+
+
+        payload = urllib.parse.urlencode({
+
+            "fontip": "YAT",
+            "bastarih": "01.07.2026",
+            "bittarih": "31.07.2026",
+            "fonkod": ""
+
+        }).encode("utf-8")
+
 
         request = urllib.request.Request(
             url,
+            data=payload,
             headers={
-                "User-Agent": "Mozilla/5.0"
+                "User-Agent": "Mozilla/5.0",
+                "Content-Type": "application/x-www-form-urlencoded"
             }
         )
 
 
-        urllib.request.urlopen(
+        response = urllib.request.urlopen(
             request,
-            timeout=10
+            timeout=15
         )
 
 
-        # Gerçek veri ayrıştırma sonraki aşamada eklenecek.
-        return []
+        result = response.read().decode(
+            "utf-8"
+        )
 
 
-    except Exception:
+        return result
 
-        return []
+
+    except Exception as e:
+
+        print(e)
+
+        return None
 
 
 
@@ -70,25 +89,30 @@ def update_system():
     )
 
 
-    funds = get_tefas_data()
+    tefas_result = get_tefas_funds()
 
 
-    data["tefas_status"] = {
+    if tefas_result:
 
-        "connection": "OK" if funds else "Bekliyor",
+        data["tefas_status"] = {
+            "connection": "OK",
+            "raw_data_received": True
+        }
 
-        "fund_count": len(funds)
 
-    }
+    else:
 
+        data["tefas_status"] = {
+            "connection": "FAILED",
+            "raw_data_received": False
+        }
 
-    data["funds"] = funds
 
 
     save_data(data)
 
 
-    print("TEFAS bağlantı testi tamamlandı")
+    print("TEFAS veri testi tamamlandı")
 
 
 
