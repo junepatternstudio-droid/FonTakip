@@ -1,6 +1,5 @@
 {
-  "last_update": "31.07.2026 23:55",
-
+  "last_update": "31.07.2026 09:30",
   "market_liquidity": {
     "daily_inflow": 0,
     "daily_outflow": 0,
@@ -11,29 +10,13 @@
     "monthly_net": 0,
     "liquidity_status": "Veri bekleniyor"
   },
-
-
   "weekly_popular_funds": [],
-
-
   "monthly_best_funds": [],
-
-
   "money_flow_leaders": [],
-
-
   "daily_top_inflow": [],
-
-
   "daily_top_outflow": [],
-
-
   "weekly_top_inflow": [],
-
-
   "weekly_top_outflow": [],
-
-
   "favorite_funds": [
     "PHE",
     "PBR",
@@ -41,114 +24,81 @@
     "DFI",
     "BMU"
   ],
-
-
   "funds": [
-
     {
       "code": "PHE",
       "type": "Hisse Senedi",
-
       "fund_size": 0,
       "investors": 0,
-
       "daily_return": 0,
       "weekly_return": 0,
       "monthly_return": 0,
-
       "daily_flow": 0,
       "weekly_flow": 0,
       "monthly_flow": 0,
-
       "daily_investor_change": 0,
       "weekly_investor_change": 0,
       "monthly_investor_change": 0
     },
-
-
     {
       "code": "PBR",
       "type": "Hisse Senedi",
-
       "fund_size": 0,
       "investors": 0,
-
       "daily_return": 0,
       "weekly_return": 0,
       "monthly_return": 0,
-
       "daily_flow": 0,
       "weekly_flow": 0,
       "monthly_flow": 0,
-
       "daily_investor_change": 0,
       "weekly_investor_change": 0,
       "monthly_investor_change": 0
     },
-
-
     {
       "code": "TLY",
       "type": "Değişken Fon",
-
       "fund_size": 0,
       "investors": 0,
-
       "daily_return": 0,
       "weekly_return": 0,
       "monthly_return": 0,
-
       "daily_flow": 0,
       "weekly_flow": 0,
       "monthly_flow": 0,
-
       "daily_investor_change": 0,
       "weekly_investor_change": 0,
       "monthly_investor_change": 0
     },
-
-
     {
       "code": "DFI",
       "type": "Fon Sepeti",
-
       "fund_size": 0,
       "investors": 0,
-
       "daily_return": 0,
       "weekly_return": 0,
       "monthly_return": 0,
-
       "daily_flow": 0,
       "weekly_flow": 0,
       "monthly_flow": 0,
-
       "daily_investor_change": 0,
       "weekly_investor_change": 0,
       "monthly_investor_change": 0
     },
-
-
     {
       "code": "BMU",
       "type": "Değişken Fon",
-
       "fund_size": 0,
       "investors": 0,
-
       "daily_return": 0,
       "weekly_return": 0,
       "monthly_return": 0,
-
       "daily_flow": 0,
       "weekly_flow": 0,
       "monthly_flow": 0,
-
       "daily_investor_change": 0,
       "weekly_investor_change": 0,
       "monthly_investor_change": 0
     }
-
   ]
-
 }
