@@ -1,5 +1,5 @@
 {
-  "last_update": "31.07.2026 09:43",
+  "last_update": "31.07.2026 10:00",
   "market_liquidity": {
     "daily_inflow": 0,
     "daily_outflow": 0,
@@ -27,5 +27,12 @@
   "funds": [],
   "tefas_status": {
     "connection": "FAILED"
+  },
+  "tefas_debug": {
+    "type": "dict",
+    "keys": [
+      "error"
+    ],
+    "sample": "{'error': 'HTTP Error 404: Not Found'}"
   }
 }
