@@ -1,5 +1,5 @@
 {
-  "last_update": "31.07.2026 10:00",
+  "last_update": "31.07.2026 22:56",
   "market_liquidity": {
     "daily_inflow": 0,
     "daily_outflow": 0,
@@ -29,10 +29,7 @@
     "connection": "FAILED"
   },
   "tefas_debug": {
-    "type": "dict",
-    "keys": [
-      "error"
-    ],
-    "sample": "{'error': 'HTTP Error 404: Not Found'}"
+    "length": 244,
+    "sample": "<html><head><title>Request Rejected</title></head><body>The requested URL was rejected. Please consult with your administrator.<br><br>Your support ID is: <9051587007499296825><br><br><a href='javascript:history.back();'>[Go Back]</body></html>"
   }
 }
