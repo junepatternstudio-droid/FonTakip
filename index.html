@@ -18,7 +18,7 @@ padding:20px;
 }
 
 .container{
-max-width:1500px;
+max-width:1600px;
 margin:auto;
 }
 
@@ -109,7 +109,7 @@ color:red;
 
 
 <div class="card">
-<h3>Likidite Durumu</h3>
+<h3>Likidite</h3>
 <p id="liquidity">-</p>
 </div>
 
@@ -124,15 +124,11 @@ color:red;
 
 <table>
 
-<thead>
-
 <tr>
 <th>Sıra</th>
 <th>Fon</th>
 <th>Tutar</th>
 </tr>
-
-</thead>
 
 <tbody id="dailyInTable"></tbody>
 
@@ -149,7 +145,26 @@ color:red;
 
 <table>
 
-<thead>
+<tr>
+<th>Sıra</th>
+<th>Fon</th>
+<th>Tutar</th>
+</tr>
+
+<tbody id="dailyOutTable"></tbody>
+
+</table>
+
+</div>
+
+
+
+
+<div class="section">
+
+<h2>🟢 Haftalık En Çok Para Girişi</h2>
+
+<table>
 
 <tr>
 <th>Sıra</th>
@@ -157,9 +172,28 @@ color:red;
 <th>Tutar</th>
 </tr>
 
-</thead>
+<tbody id="weeklyInTable"></tbody>
 
-<tbody id="dailyOutTable"></tbody>
+</table>
+
+</div>
+
+
+
+
+<div class="section">
+
+<h2>🔴 Haftalık En Çok Para Çıkışı</h2>
+
+<table>
+
+<tr>
+<th>Sıra</th>
+<th>Fon</th>
+<th>Tutar</th>
+</tr>
+
+<tbody id="weeklyOutTable"></tbody>
 
 </table>
 
@@ -175,7 +209,6 @@ color:red;
 
 <table>
 
-<thead>
 
 <tr>
 
@@ -191,8 +224,6 @@ color:red;
 <th>Haftalık Yatırımcı Değişimi</th>
 
 </tr>
-
-</thead>
 
 
 <tbody id="favorites"></tbody>
@@ -214,15 +245,13 @@ color:red;
 
 fetch("data.json")
 
-.then(response => response.json())
+.then(response=>response.json())
 
-.then(data => {
-
+.then(data=>{
 
 
 document.getElementById("update").innerHTML =
 "Son güncelleme: " + data.last_update;
-
 
 
 document.getElementById("dailyIn").innerHTML =
@@ -239,7 +268,6 @@ data.market_liquidity.daily_net;
 
 document.getElementById("liquidity").innerHTML =
 data.market_liquidity.liquidity_status;
-
 
 
 
@@ -275,11 +303,16 @@ document.getElementById("dailyInTable").innerHTML =
 createRows(data.daily_top_inflow);
 
 
-
 document.getElementById("dailyOutTable").innerHTML =
 createRows(data.daily_top_outflow);
 
 
+document.getElementById("weeklyInTable").innerHTML =
+createRows(data.weekly_top_inflow);
+
+
+document.getElementById("weeklyOutTable").innerHTML =
+createRows(data.weekly_top_outflow);
 
 
 
@@ -316,9 +349,7 @@ favoriteHTML += `
 
 <td>${fund.weekly_investor_change}</td>
 
-
 </tr>
-
 
 `;
 
@@ -329,7 +360,6 @@ favoriteHTML += `
 
 
 document.getElementById("favorites").innerHTML=favoriteHTML;
-
 
 
 });
