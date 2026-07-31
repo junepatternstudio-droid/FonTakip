@@ -8,14 +8,11 @@ DATA_FILE = "data.json"
 
 
 def load_data():
-
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         return json.load(f)
 
 
-
 def save_data(data):
-
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(
             data,
@@ -25,12 +22,7 @@ def save_data(data):
         )
 
 
-
-def get_tefas_funds():
-
-    """
-    TEFAS fon sorgusu için temel bağlantı.
-    """
+def get_tefas_history():
 
     try:
 
@@ -59,23 +51,70 @@ def get_tefas_funds():
 
         response = urllib.request.urlopen(
             request,
-            timeout=15
+            timeout=20
         )
 
 
-        result = response.read().decode(
-            "utf-8"
+        return json.loads(
+            response.read().decode("utf-8")
         )
-
-
-        return result
 
 
     except Exception as e:
 
-        print(e)
+        print("TEFAS hata:", e)
 
         return None
+
+
+
+def parse_funds(raw):
+
+    funds = []
+
+
+    if not raw:
+        return funds
+
+
+    try:
+
+        items = raw.get("data", [])
+
+
+        for item in items:
+
+            funds.append({
+
+                "code": item.get("FONKODU", ""),
+
+                "name": item.get("FONUNVAN", ""),
+
+                "price": item.get("FIYAT", 0),
+
+                "date": item.get("TARIH", ""),
+
+                "daily_return": 0,
+
+                "weekly_return": 0,
+
+                "monthly_return": 0,
+
+                "daily_inflow": 0,
+
+                "weekly_inflow": 0,
+
+                "investor_change": 0
+
+            })
+
+
+    except Exception as e:
+
+        print("Ayrıştırma hata:", e)
+
+
+    return funds
 
 
 
@@ -89,30 +128,31 @@ def update_system():
     )
 
 
-    tefas_result = get_tefas_funds()
+    raw = get_tefas_history()
 
 
-    if tefas_result:
-
-        data["tefas_status"] = {
-            "connection": "OK",
-            "raw_data_received": True
-        }
+    funds = parse_funds(raw)
 
 
-    else:
+    data["funds"] = funds
 
-        data["tefas_status"] = {
-            "connection": "FAILED",
-            "raw_data_received": False
-        }
 
+    data["tefas_status"] = {
+
+        "connection": "OK" if funds else "NO DATA",
+
+        "fund_count": len(funds)
+
+    }
 
 
     save_data(data)
 
 
-    print("TEFAS veri testi tamamlandı")
+    print(
+        "Fon sayısı:",
+        len(funds)
+    )
 
 
 
