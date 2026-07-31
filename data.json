@@ -5,14 +5,11 @@
     "daily_inflow": 0,
     "daily_outflow": 0,
     "daily_net": 0,
-
     "weekly_inflow": 0,
     "weekly_outflow": 0,
     "weekly_net": 0,
-
     "liquidity_status": "Veri bekleniyor"
   },
-
 
   "daily_top_inflow": [
     {
@@ -24,7 +21,6 @@
     }
   ],
 
-
   "daily_top_outflow": [
     {
       "rank": 1,
@@ -34,7 +30,6 @@
       "return": 0
     }
   ],
-
 
   "weekly_top_inflow": [
     {
@@ -46,7 +41,6 @@
     }
   ],
 
-
   "weekly_top_outflow": [
     {
       "rank": 1,
@@ -57,7 +51,6 @@
     }
   ],
 
-
   "favorite_funds": [
     "PHE",
     "PBR",
@@ -66,30 +59,90 @@
     "BMU"
   ],
 
-
   "funds": [
     {
       "code": "PHE",
       "type": "Hisse Senedi",
-      "size": 0,
+      "fund_size": 0,
       "investors": 0,
+
       "daily_return": 0,
       "weekly_return": 0,
       "monthly_return": 0,
+
       "daily_flow": 0,
-      "weekly_flow": 0
+      "weekly_flow": 0,
+
+      "daily_investor_change": 0,
+      "weekly_investor_change": 0
     },
 
     {
       "code": "PBR",
       "type": "Hisse Senedi",
-      "size": 0,
+      "fund_size": 0,
       "investors": 0,
+
       "daily_return": 0,
       "weekly_return": 0,
       "monthly_return": 0,
+
       "daily_flow": 0,
-      "weekly_flow": 0
+      "weekly_flow": 0,
+
+      "daily_investor_change": 0,
+      "weekly_investor_change": 0
+    },
+
+    {
+      "code": "TLY",
+      "type": "Değişken Fon",
+      "fund_size": 0,
+      "investors": 0,
+
+      "daily_return": 0,
+      "weekly_return": 0,
+      "monthly_return": 0,
+
+      "daily_flow": 0,
+      "weekly_flow": 0,
+
+      "daily_investor_change": 0,
+      "weekly_investor_change": 0
+    },
+
+    {
+      "code": "DFI",
+      "type": "Fon Sepeti",
+      "fund_size": 0,
+      "investors": 0,
+
+      "daily_return": 0,
+      "weekly_return": 0,
+      "monthly_return": 0,
+
+      "daily_flow": 0,
+      "weekly_flow": 0,
+
+      "daily_investor_change": 0,
+      "weekly_investor_change": 0
+    },
+
+    {
+      "code": "BMU",
+      "type": "Değişken Fon",
+      "fund_size": 0,
+      "investors": 0,
+
+      "daily_return": 0,
+      "weekly_return": 0,
+      "monthly_return": 0,
+
+      "daily_flow": 0,
+      "weekly_flow": 0,
+
+      "daily_investor_change": 0,
+      "weekly_investor_change": 0
     }
   ]
 }
