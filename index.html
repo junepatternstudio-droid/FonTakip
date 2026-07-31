@@ -13,11 +13,12 @@
 body{
 font-family:Arial,sans-serif;
 background:#f4f6f8;
+margin:0;
 padding:20px;
 }
 
 .container{
-max-width:1400px;
+max-width:1500px;
 margin:auto;
 }
 
@@ -38,23 +39,28 @@ border-radius:12px;
 box-shadow:0 2px 8px #ddd;
 }
 
+.section{
+margin-top:40px;
+}
+
 table{
 width:100%;
-border-collapse:collapse;
 background:white;
+border-collapse:collapse;
 margin-top:15px;
+font-size:14px;
 }
 
 th{
 background:#111827;
 color:white;
-padding:10px;
+padding:12px;
 }
 
 td{
 padding:10px;
-border-bottom:1px solid #ddd;
 text-align:center;
+border-bottom:1px solid #ddd;
 }
 
 .green{
@@ -63,10 +69,6 @@ color:green;
 
 .red{
 color:red;
-}
-
-.section{
-margin-top:40px;
 }
 
 </style>
@@ -87,20 +89,30 @@ margin-top:40px;
 
 <div class="cards">
 
+
+<div class="card">
+<h3>Günlük Para Girişi</h3>
+<p id="dailyIn">-</p>
+</div>
+
+
+<div class="card">
+<h3>Günlük Para Çıkışı</h3>
+<p id="dailyOut">-</p>
+</div>
+
+
 <div class="card">
 <h3>Günlük Net Akış</h3>
 <p id="dailyNet">-</p>
 </div>
 
-<div class="card">
-<h3>Haftalık Net Akış</h3>
-<p id="weeklyNet">-</p>
-</div>
 
 <div class="card">
-<h3>Likidite</h3>
+<h3>Likidite Durumu</h3>
 <p id="liquidity">-</p>
 </div>
+
 
 </div>
 
@@ -113,14 +125,16 @@ margin-top:40px;
 <table>
 
 <thead>
+
 <tr>
 <th>Sıra</th>
 <th>Fon</th>
 <th>Tutar</th>
 </tr>
+
 </thead>
 
-<tbody id="dailyIn"></tbody>
+<tbody id="dailyInTable"></tbody>
 
 </table>
 
@@ -136,14 +150,16 @@ margin-top:40px;
 <table>
 
 <thead>
+
 <tr>
 <th>Sıra</th>
 <th>Fon</th>
 <th>Tutar</th>
 </tr>
+
 </thead>
 
-<tbody id="dailyOut"></tbody>
+<tbody id="dailyOutTable"></tbody>
 
 </table>
 
@@ -154,44 +170,36 @@ margin-top:40px;
 
 <div class="section">
 
-<h2>🟢 Haftalık En Çok Para Girişi</h2>
+<h2>⭐ Favori Fonlarım</h2>
+
 
 <table>
 
 <thead>
+
 <tr>
-<th>Sıra</th>
+
 <th>Fon</th>
-<th>Tutar</th>
+<th>Tür</th>
+<th>Fon Büyüklüğü</th>
+<th>Yatırımcı</th>
+<th>Günlük Getiri</th>
+<th>Haftalık Getiri</th>
+<th>Günlük Akış</th>
+<th>Haftalık Akış</th>
+<th>Günlük Yatırımcı Değişimi</th>
+<th>Haftalık Yatırımcı Değişimi</th>
+
 </tr>
+
 </thead>
 
-<tbody id="weeklyIn"></tbody>
+
+<tbody id="favorites"></tbody>
+
 
 </table>
 
-</div>
-
-
-
-
-<div class="section">
-
-<h2>🔴 Haftalık En Çok Para Çıkışı</h2>
-
-<table>
-
-<thead>
-<tr>
-<th>Sıra</th>
-<th>Fon</th>
-<th>Tutar</th>
-</tr>
-</thead>
-
-<tbody id="weeklyOut"></tbody>
-
-</table>
 
 </div>
 
@@ -206,25 +214,32 @@ margin-top:40px;
 
 fetch("data.json")
 
-.then(res=>res.json())
+.then(response => response.json())
 
-.then(data=>{
+.then(data => {
+
 
 
 document.getElementById("update").innerHTML =
-"Son güncelleme: "+data.last_update;
+"Son güncelleme: " + data.last_update;
+
+
+
+document.getElementById("dailyIn").innerHTML =
+data.market_liquidity.daily_inflow;
+
+
+document.getElementById("dailyOut").innerHTML =
+data.market_liquidity.daily_outflow;
 
 
 document.getElementById("dailyNet").innerHTML =
 data.market_liquidity.daily_net;
 
 
-document.getElementById("weeklyNet").innerHTML =
-data.market_liquidity.weekly_net;
-
-
 document.getElementById("liquidity").innerHTML =
 data.market_liquidity.liquidity_status;
+
 
 
 
@@ -256,20 +271,64 @@ return html;
 
 
 
-document.getElementById("dailyIn").innerHTML =
+document.getElementById("dailyInTable").innerHTML =
 createRows(data.daily_top_inflow);
 
 
-document.getElementById("dailyOut").innerHTML =
+
+document.getElementById("dailyOutTable").innerHTML =
 createRows(data.daily_top_outflow);
 
 
-document.getElementById("weeklyIn").innerHTML =
-createRows(data.weekly_top_inflow);
 
 
-document.getElementById("weeklyOut").innerHTML =
-createRows(data.weekly_top_outflow);
+
+let favoriteHTML="";
+
+
+data.funds.forEach(fund=>{
+
+
+if(data.favorite_funds.includes(fund.code)){
+
+
+favoriteHTML += `
+
+<tr>
+
+<td>${fund.code}</td>
+
+<td>${fund.type}</td>
+
+<td>${fund.fund_size}</td>
+
+<td>${fund.investors}</td>
+
+<td>${fund.daily_return}%</td>
+
+<td>${fund.weekly_return}%</td>
+
+<td>${fund.daily_flow}</td>
+
+<td>${fund.weekly_flow}</td>
+
+<td>${fund.daily_investor_change}</td>
+
+<td>${fund.weekly_investor_change}</td>
+
+
+</tr>
+
+
+`;
+
+}
+
+
+});
+
+
+document.getElementById("favorites").innerHTML=favoriteHTML;
 
 
 
