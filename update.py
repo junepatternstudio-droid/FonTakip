@@ -5,7 +5,6 @@ import urllib.parse
 
 
 DATA_FILE = "data.json"
-DEBUG_FILE = "tefas_debug.json"
 
 
 def load_data():
@@ -27,24 +26,11 @@ def save_data(data):
 
 
 
-def save_debug(data):
-
-    with open(DEBUG_FILE, "w", encoding="utf-8") as f:
-        json.dump(
-            data,
-            f,
-            ensure_ascii=False,
-            indent=2
-        )
-
-
-
 def get_tefas_data():
 
     try:
 
         url = "https://www.tefas.gov.tr/api/DB/BindHistoryInfo"
-
 
         payload = urllib.parse.urlencode({
 
@@ -74,15 +60,14 @@ def get_tefas_data():
 
         text = response.read().decode("utf-8")
 
-
         return json.loads(text)
 
 
     except Exception as e:
 
-        print("TEFAS bağlantı hatası:", e)
-
-        return None
+        return {
+            "error": str(e)
+        }
 
 
 
@@ -90,43 +75,34 @@ def update_system():
 
     data = load_data()
 
-
     data["last_update"] = datetime.now().strftime(
         "%d.%m.%Y %H:%M"
     )
 
 
-    raw = get_tefas_data()
+    tefas = get_tefas_data()
 
 
-    if raw:
-
-        save_debug(raw)
+    data["tefas_debug"] = {
 
 
-        data["tefas_status"] = {
-
-            "connection": "OK",
-
-            "debug_file": "tefas_debug.json"
-
-        }
+        "type": type(tefas).__name__,
 
 
-    else:
+        "keys": list(tefas.keys())
+        if isinstance(tefas, dict)
+        else [],
 
-        data["tefas_status"] = {
 
-            "connection": "FAILED"
+        "sample": str(tefas)[:1000]
 
-        }
-
+    }
 
 
     save_data(data)
 
 
-    print("TEFAS test tamamlandı")
+    print("TEFAS analiz kaydedildi")
 
 
 
