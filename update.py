@@ -1,24 +1,64 @@
-import json
-from datetime import datetime
+name: Fon Takip Güncelleme
+
+permissions:
+  contents: write
 
 
-file = "data.json"
+on:
+
+  schedule:
+    - cron: "0 22 * * *"
+
+  workflow_dispatch:
 
 
-with open(file, "r", encoding="utf-8") as f:
-    data = json.load(f)
+
+jobs:
+
+  update-data:
+
+    runs-on: ubuntu-latest
 
 
-data["last_update"] = datetime.now().strftime("%d.%m.%Y %H:%M")
+    steps:
 
 
-with open(file, "w", encoding="utf-8") as f:
-    json.dump(
-        data,
-        f,
-        ensure_ascii=False,
-        indent=2
-    )
+    - name: Kodları indir
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
 
-print("Fon takip sistemi güncellendi")
+
+    - name: Python kurulumu
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.x"
+
+
+
+    - name: Güncelleme scriptini çalıştır
+      run: |
+        python update.py
+
+
+
+    - name: Değişiklikleri kontrol et ve kaydet
+      run: |
+
+        git config user.name "FonTakip Bot"
+
+        git config user.email "actions@github.com"
+
+
+        git add data.json
+
+
+        git diff --cached --quiet || git commit -m "Otomatik fon verisi güncellemesi"
+
+
+
+    - name: GitHub'a gönder
+      run: |
+
+        git push
