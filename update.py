@@ -3,14 +3,11 @@ name: Fon Takip Güncelleme
 permissions:
   contents: write
 
-
 on:
-
   schedule:
     - cron: "0 22 * * *"
 
   workflow_dispatch:
-
 
 
 jobs:
@@ -19,46 +16,38 @@ jobs:
 
     runs-on: ubuntu-latest
 
-
     steps:
 
-
-    - name: Kodları indir
-      uses: actions/checkout@v5
-      with:
-        fetch-depth: 0
-
+      - name: Kodları indir
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
 
-    - name: Python kurulumu
-      uses: actions/setup-python@v6
-      with:
-        python-version: "3.x"
+      - name: Python kurulumu
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.x"
 
 
-
-    - name: Güncelleme scriptini çalıştır
-      run: |
-        python update.py
-
+      - name: Güncelleme scriptini çalıştır
+        run: |
+          python update.py
 
 
-    - name: Değişiklikleri kaydet
-      run: |
+      - name: Değişiklikleri kaydet
+        run: |
 
-        git config user.name "FonTakip Bot"
+          git config user.name "FonTakip Bot"
 
-        git config user.email "actions@github.com"
+          git config user.email "actions@github.com"
 
+          git add data.json
 
-        git add data.json
-
-
-        git diff --cached --quiet || git commit -m "Otomatik fon verisi güncellemesi"
+          git diff --cached --quiet || git commit -m "Otomatik fon verisi güncellemesi"
 
 
+      - name: GitHub'a gönder
+        run: |
 
-    - name: GitHub'a gönder
-      run: |
-
-        git push
+          git push
