@@ -6,14 +6,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>TEFAS Fon Takip Paneli</title>
+<title>Fon Radar Paneli</title>
 
 <style>
 
 body{
 font-family:Arial,sans-serif;
 background:#f4f6f8;
-margin:0;
 padding:20px;
 }
 
@@ -59,16 +58,8 @@ padding:12px;
 
 td{
 padding:10px;
-text-align:center;
 border-bottom:1px solid #ddd;
-}
-
-.green{
-color:green;
-}
-
-.red{
-color:red;
+text-align:center;
 }
 
 </style>
@@ -82,29 +73,30 @@ color:red;
 <div class="container">
 
 
-<h1>TEFAS Fon Takip Paneli</h1>
+<h1>📊 Fon Radar Paneli</h1>
 
 <p id="update"></p>
+
 
 
 <div class="cards">
 
 
 <div class="card">
-<h3>Günlük Para Girişi</h3>
-<p id="dailyIn">-</p>
-</div>
-
-
-<div class="card">
-<h3>Günlük Para Çıkışı</h3>
-<p id="dailyOut">-</p>
-</div>
-
-
-<div class="card">
 <h3>Günlük Net Akış</h3>
 <p id="dailyNet">-</p>
+</div>
+
+
+<div class="card">
+<h3>Haftalık Net Akış</h3>
+<p id="weeklyNet">-</p>
+</div>
+
+
+<div class="card">
+<h3>Aylık Net Akış</h3>
+<p id="monthlyNet">-</p>
 </div>
 
 
@@ -118,19 +110,27 @@ color:red;
 
 
 
+
+
 <div class="section">
 
-<h2>🟢 Günlük En Çok Para Girişi</h2>
+<h2>🏆 Haftanın Popüler Fonları</h2>
 
 <table>
+
+<thead>
 
 <tr>
 <th>Sıra</th>
 <th>Fon</th>
-<th>Tutar</th>
+<th>Getiri</th>
+<th>Para Akışı</th>
+<th>Yatırımcı Değişimi</th>
 </tr>
 
-<tbody id="dailyInTable"></tbody>
+</thead>
+
+<tbody id="weeklyPopular"></tbody>
 
 </table>
 
@@ -139,19 +139,26 @@ color:red;
 
 
 
+
 <div class="section">
 
-<h2>🔴 Günlük En Çok Para Çıkışı</h2>
+<h2>📈 Son 1 Ayın Başarılı Fonları</h2>
 
 <table>
+
+<thead>
 
 <tr>
 <th>Sıra</th>
 <th>Fon</th>
-<th>Tutar</th>
+<th>1 Ay Getiri</th>
+<th>Fon Büyüklüğü</th>
+<th>Yatırımcı Değişimi</th>
 </tr>
 
-<tbody id="dailyOutTable"></tbody>
+</thead>
+
+<tbody id="monthlyBest"></tbody>
 
 </table>
 
@@ -160,44 +167,31 @@ color:red;
 
 
 
+
 <div class="section">
 
-<h2>🟢 Haftalık En Çok Para Girişi</h2>
+<h2>💰 Para Akışı Liderleri</h2>
 
 <table>
+
+<thead>
 
 <tr>
 <th>Sıra</th>
 <th>Fon</th>
-<th>Tutar</th>
+<th>Günlük Akış</th>
+<th>Haftalık Akış</th>
+<th>Aylık Akış</th>
 </tr>
 
-<tbody id="weeklyInTable"></tbody>
+</thead>
+
+<tbody id="moneyFlow"></tbody>
 
 </table>
 
 </div>
 
-
-
-
-<div class="section">
-
-<h2>🔴 Haftalık En Çok Para Çıkışı</h2>
-
-<table>
-
-<tr>
-<th>Sıra</th>
-<th>Fon</th>
-<th>Tutar</th>
-</tr>
-
-<tbody id="weeklyOutTable"></tbody>
-
-</table>
-
-</div>
 
 
 
@@ -206,24 +200,21 @@ color:red;
 
 <h2>⭐ Favori Fonlarım</h2>
 
-
 <table>
 
+<thead>
 
 <tr>
-
 <th>Fon</th>
 <th>Tür</th>
-<th>Fon Büyüklüğü</th>
+<th>Büyüklük</th>
 <th>Yatırımcı</th>
 <th>Günlük Getiri</th>
 <th>Haftalık Getiri</th>
-<th>Günlük Akış</th>
-<th>Haftalık Akış</th>
-<th>Günlük Yatırımcı Değişimi</th>
-<th>Haftalık Yatırımcı Değişimi</th>
-
+<th>Aylık Getiri</th>
 </tr>
+
+</thead>
 
 
 <tbody id="favorites"></tbody>
@@ -231,12 +222,14 @@ color:red;
 
 </table>
 
-
 </div>
 
 
 
+
 </div>
+
+
 
 
 
@@ -245,25 +238,25 @@ color:red;
 
 fetch("data.json")
 
-.then(response=>response.json())
+.then(r=>r.json())
 
 .then(data=>{
 
 
 document.getElementById("update").innerHTML =
-"Son güncelleme: " + data.last_update;
-
-
-document.getElementById("dailyIn").innerHTML =
-data.market_liquidity.daily_inflow;
-
-
-document.getElementById("dailyOut").innerHTML =
-data.market_liquidity.daily_outflow;
+"Son güncelleme: "+data.last_update;
 
 
 document.getElementById("dailyNet").innerHTML =
 data.market_liquidity.daily_net;
+
+
+document.getElementById("weeklyNet").innerHTML =
+data.market_liquidity.weekly_net;
+
+
+document.getElementById("monthlyNet").innerHTML =
+data.market_liquidity.monthly_net;
 
 
 document.getElementById("liquidity").innerHTML =
@@ -271,21 +264,22 @@ data.market_liquidity.liquidity_status;
 
 
 
-function createRows(list){
+
+function rows(list){
 
 let html="";
 
-list.forEach(item=>{
+list.forEach((x,i)=>{
 
-html += `
+html+=`
 
 <tr>
 
-<td>${item.rank}</td>
-
-<td>${item.code}</td>
-
-<td>${item.amount}</td>
+<td>${i+1}</td>
+<td>${x.code}</td>
+<td>${x.return || x.monthly_return || ""}</td>
+<td>${x.flow || x.amount || ""}</td>
+<td>${x.investor_change || ""}</td>
 
 </tr>
 
@@ -299,55 +293,39 @@ return html;
 
 
 
-document.getElementById("dailyInTable").innerHTML =
-createRows(data.daily_top_inflow);
+document.getElementById("weeklyPopular").innerHTML =
+rows(data.weekly_popular_funds);
 
 
-document.getElementById("dailyOutTable").innerHTML =
-createRows(data.daily_top_outflow);
+document.getElementById("monthlyBest").innerHTML =
+rows(data.monthly_best_funds);
 
 
-document.getElementById("weeklyInTable").innerHTML =
-createRows(data.weekly_top_inflow);
-
-
-document.getElementById("weeklyOutTable").innerHTML =
-createRows(data.weekly_top_outflow);
+document.getElementById("moneyFlow").innerHTML =
+rows(data.money_flow_leaders);
 
 
 
-let favoriteHTML="";
+
+let fav="";
 
 
-data.funds.forEach(fund=>{
+data.funds.forEach(f=>{
+
+if(data.favorite_funds.includes(f.code)){
 
 
-if(data.favorite_funds.includes(fund.code)){
-
-
-favoriteHTML += `
+fav+=`
 
 <tr>
 
-<td>${fund.code}</td>
-
-<td>${fund.type}</td>
-
-<td>${fund.fund_size}</td>
-
-<td>${fund.investors}</td>
-
-<td>${fund.daily_return}%</td>
-
-<td>${fund.weekly_return}%</td>
-
-<td>${fund.daily_flow}</td>
-
-<td>${fund.weekly_flow}</td>
-
-<td>${fund.daily_investor_change}</td>
-
-<td>${fund.weekly_investor_change}</td>
+<td>${f.code}</td>
+<td>${f.type}</td>
+<td>${f.fund_size}</td>
+<td>${f.investors}</td>
+<td>${f.daily_return}%</td>
+<td>${f.weekly_return}%</td>
+<td>${f.monthly_return}%</td>
 
 </tr>
 
@@ -355,11 +333,10 @@ favoriteHTML += `
 
 }
 
-
 });
 
 
-document.getElementById("favorites").innerHTML=favoriteHTML;
+document.getElementById("favorites").innerHTML=fav;
 
 
 });
