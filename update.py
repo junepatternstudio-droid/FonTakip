@@ -24,14 +24,14 @@ jobs:
 
 
     - name: Kodları indir
-      uses: actions/checkout@v4
+      uses: actions/checkout@v5
       with:
         fetch-depth: 0
 
 
 
     - name: Python kurulumu
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: "3.x"
 
@@ -43,7 +43,7 @@ jobs:
 
 
 
-    - name: Değişiklikleri kontrol et ve kaydet
+    - name: Değişiklikleri kaydet
       run: |
 
         git config user.name "FonTakip Bot"
