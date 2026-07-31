@@ -1,5 +1,5 @@
 {
-  "last_update": "31.07.2026 09:38",
+  "last_update": "31.07.2026 09:39",
   "market_liquidity": {
     "daily_inflow": 0,
     "daily_outflow": 0,
@@ -26,7 +26,7 @@
   ],
   "funds": [],
   "tefas_status": {
-    "connection": "FAILED",
-    "raw_data_received": false
+    "connection": "NO DATA",
+    "fund_count": 0
   }
 }
