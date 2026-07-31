@@ -5,14 +5,18 @@ import urllib.parse
 
 
 DATA_FILE = "data.json"
+DEBUG_FILE = "tefas_debug.json"
 
 
 def load_data():
+
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         return json.load(f)
 
 
+
 def save_data(data):
+
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(
             data,
@@ -22,7 +26,20 @@ def save_data(data):
         )
 
 
-def get_tefas_history():
+
+def save_debug(data):
+
+    with open(DEBUG_FILE, "w", encoding="utf-8") as f:
+        json.dump(
+            data,
+            f,
+            ensure_ascii=False,
+            indent=2
+        )
+
+
+
+def get_tefas_data():
 
     try:
 
@@ -55,66 +72,17 @@ def get_tefas_history():
         )
 
 
-        return json.loads(
-            response.read().decode("utf-8")
-        )
+        text = response.read().decode("utf-8")
+
+
+        return json.loads(text)
 
 
     except Exception as e:
 
-        print("TEFAS hata:", e)
+        print("TEFAS bağlantı hatası:", e)
 
         return None
-
-
-
-def parse_funds(raw):
-
-    funds = []
-
-
-    if not raw:
-        return funds
-
-
-    try:
-
-        items = raw.get("data", [])
-
-
-        for item in items:
-
-            funds.append({
-
-                "code": item.get("FONKODU", ""),
-
-                "name": item.get("FONUNVAN", ""),
-
-                "price": item.get("FIYAT", 0),
-
-                "date": item.get("TARIH", ""),
-
-                "daily_return": 0,
-
-                "weekly_return": 0,
-
-                "monthly_return": 0,
-
-                "daily_inflow": 0,
-
-                "weekly_inflow": 0,
-
-                "investor_change": 0
-
-            })
-
-
-    except Exception as e:
-
-        print("Ayrıştırma hata:", e)
-
-
-    return funds
 
 
 
@@ -128,31 +96,37 @@ def update_system():
     )
 
 
-    raw = get_tefas_history()
+    raw = get_tefas_data()
 
 
-    funds = parse_funds(raw)
+    if raw:
+
+        save_debug(raw)
 
 
-    data["funds"] = funds
+        data["tefas_status"] = {
+
+            "connection": "OK",
+
+            "debug_file": "tefas_debug.json"
+
+        }
 
 
-    data["tefas_status"] = {
+    else:
 
-        "connection": "OK" if funds else "NO DATA",
+        data["tefas_status"] = {
 
-        "fund_count": len(funds)
+            "connection": "FAILED"
 
-    }
+        }
+
 
 
     save_data(data)
 
 
-    print(
-        "Fon sayısı:",
-        len(funds)
-    )
+    print("TEFAS test tamamlandı")
 
 
 
