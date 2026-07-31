@@ -1,72 +1,95 @@
 {
   "last_update": "31.07.2026 23:55",
+
   "market_liquidity": {
     "daily_inflow": 0,
     "daily_outflow": 0,
+    "daily_net": 0,
+
     "weekly_inflow": 0,
     "weekly_outflow": 0,
-    "net_flow": 0
+    "weekly_net": 0,
+
+    "liquidity_status": "Veri bekleniyor"
   },
+
+
+  "daily_top_inflow": [
+    {
+      "rank": 1,
+      "code": "PHE",
+      "name": "PHE",
+      "amount": 0,
+      "return": 0
+    }
+  ],
+
+
+  "daily_top_outflow": [
+    {
+      "rank": 1,
+      "code": "ABC",
+      "name": "ABC",
+      "amount": 0,
+      "return": 0
+    }
+  ],
+
+
+  "weekly_top_inflow": [
+    {
+      "rank": 1,
+      "code": "TLY",
+      "name": "TLY",
+      "amount": 0,
+      "return": 0
+    }
+  ],
+
+
+  "weekly_top_outflow": [
+    {
+      "rank": 1,
+      "code": "DEF",
+      "name": "DEF",
+      "amount": 0,
+      "return": 0
+    }
+  ],
+
+
+  "favorite_funds": [
+    "PHE",
+    "PBR",
+    "TLY",
+    "DFI",
+    "BMU"
+  ],
+
+
   "funds": [
     {
       "code": "PHE",
-      "name": "PHE",
       "type": "Hisse Senedi",
-      "daily_inflow": 0,
-      "daily_outflow": 0,
-      "weekly_inflow": 0,
-      "weekly_outflow": 0,
-      "net_flow": 0,
+      "size": 0,
+      "investors": 0,
       "daily_return": 0,
-      "weekly_return": 0
+      "weekly_return": 0,
+      "monthly_return": 0,
+      "daily_flow": 0,
+      "weekly_flow": 0
     },
+
     {
       "code": "PBR",
-      "name": "PBR",
       "type": "Hisse Senedi",
-      "daily_inflow": 0,
-      "daily_outflow": 0,
-      "weekly_inflow": 0,
-      "weekly_outflow": 0,
-      "net_flow": 0,
+      "size": 0,
+      "investors": 0,
       "daily_return": 0,
-      "weekly_return": 0
-    },
-    {
-      "code": "TLY",
-      "name": "TLY",
-      "type": "Değişken Fon",
-      "daily_inflow": 0,
-      "daily_outflow": 0,
-      "weekly_inflow": 0,
-      "weekly_outflow": 0,
-      "net_flow": 0,
-      "daily_return": 0,
-      "weekly_return": 0
-    },
-    {
-      "code": "DFI",
-      "name": "DFI",
-      "type": "Fon Sepeti",
-      "daily_inflow": 0,
-      "daily_outflow": 0,
-      "weekly_inflow": 0,
-      "weekly_outflow": 0,
-      "net_flow": 0,
-      "daily_return": 0,
-      "weekly_return": 0
-    },
-    {
-      "code": "BMU",
-      "name": "BMU",
-      "type": "Değişken Fon",
-      "daily_inflow": 0,
-      "daily_outflow": 0,
-      "weekly_inflow": 0,
-      "weekly_outflow": 0,
-      "net_flow": 0,
-      "daily_return": 0,
-      "weekly_return": 0
+      "weekly_return": 0,
+      "monthly_return": 0,
+      "daily_flow": 0,
+      "weekly_flow": 0
     }
   ]
 }
