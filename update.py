@@ -1,7 +1,6 @@
 import json
 from datetime import datetime
 import urllib.request
-import urllib.parse
 
 
 DATA_FILE = "data.json"
@@ -26,28 +25,17 @@ def save_data(data):
 
 
 
-def get_tefas_data():
+def get_tefas_page():
 
     try:
 
-        url = "https://www.tefas.gov.tr/api/DB/BindHistoryInfo"
-
-        payload = urllib.parse.urlencode({
-
-            "fontip": "YAT",
-            "bastarih": "01.07.2026",
-            "bittarih": "31.07.2026",
-            "fonkod": ""
-
-        }).encode("utf-8")
+        url = "https://www.tefas.gov.tr"
 
 
         request = urllib.request.Request(
             url,
-            data=payload,
             headers={
-                "User-Agent": "Mozilla/5.0",
-                "Content-Type": "application/x-www-form-urlencoded"
+                "User-Agent": "Mozilla/5.0"
             }
         )
 
@@ -58,16 +46,18 @@ def get_tefas_data():
         )
 
 
-        text = response.read().decode("utf-8")
+        html = response.read().decode(
+            "utf-8",
+            errors="ignore"
+        )
 
-        return json.loads(text)
+
+        return html
 
 
     except Exception as e:
 
-        return {
-            "error": str(e)
-        }
+        return str(e)
 
 
 
@@ -75,26 +65,20 @@ def update_system():
 
     data = load_data()
 
+
     data["last_update"] = datetime.now().strftime(
         "%d.%m.%Y %H:%M"
     )
 
 
-    tefas = get_tefas_data()
+    page = get_tefas_page()
 
 
     data["tefas_debug"] = {
 
+        "length": len(page),
 
-        "type": type(tefas).__name__,
-
-
-        "keys": list(tefas.keys())
-        if isinstance(tefas, dict)
-        else [],
-
-
-        "sample": str(tefas)[:1000]
+        "sample": page[:2000]
 
     }
 
@@ -102,7 +86,7 @@ def update_system():
     save_data(data)
 
 
-    print("TEFAS analiz kaydedildi")
+    print("TEFAS sayfa analizi tamamlandı")
 
 
 
