@@ -1,14 +1,14 @@
 {
-  "last_update": "31.07.2026 09:32",
+  "last_update": "31.07.2026 09:34",
   "market_liquidity": {
     "daily_inflow": 0,
     "daily_outflow": 0,
-    "daily_net": 0,
     "weekly_inflow": 0,
     "weekly_outflow": 0,
-    "weekly_net": 0,
-    "monthly_net": 0,
-    "liquidity_status": "Veri bekleniyor"
+    "monthly_inflow": 0,
+    "monthly_outflow": 0,
+    "net_flow": 0,
+    "liquidity_status": "Veri bağlantısı hazırlanıyor"
   },
   "weekly_popular_funds": [],
   "monthly_best_funds": [],
