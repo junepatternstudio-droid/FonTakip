@@ -1,26 +1,45 @@
 import json
 from datetime import datetime
+import urllib.request
 
 
 DATA_FILE = "data.json"
 
 
+
 def load_data():
 
-    with open(DATA_FILE, "r", encoding="utf-8") as file:
-        return json.load(file)
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
 
 
 
 def save_data(data):
 
-    with open(DATA_FILE, "w", encoding="utf-8") as file:
+    with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(
             data,
-            file,
+            f,
             ensure_ascii=False,
             indent=2
         )
+
+
+
+def get_market_status():
+
+    return {
+
+        "daily_inflow": 0,
+        "daily_outflow": 0,
+        "weekly_inflow": 0,
+        "weekly_outflow": 0,
+        "monthly_inflow": 0,
+        "monthly_outflow": 0,
+        "net_flow": 0,
+        "liquidity_status": "Veri bağlantısı hazırlanıyor"
+
+    }
 
 
 
@@ -34,41 +53,13 @@ def update_system():
     )
 
 
-    if "market_liquidity" not in data:
-
-        data["market_liquidity"] = {
-
-            "daily_inflow": 0,
-            "daily_outflow": 0,
-            "weekly_inflow": 0,
-            "weekly_outflow": 0,
-            "monthly_inflow": 0,
-            "monthly_outflow": 0,
-            "net_flow": 0,
-            "liquidity_status": "Hazırlanıyor"
-
-        }
-
-
-    if "weekly_popular_funds" not in data:
-
-        data["weekly_popular_funds"] = []
-
-
-    if "monthly_best_funds" not in data:
-
-        data["monthly_best_funds"] = []
-
-
-    if "money_flow_leaders" not in data:
-
-        data["money_flow_leaders"] = []
+    data["market_liquidity"] = get_market_status()
 
 
     save_data(data)
 
 
-    print("Fon takip veri sistemi güncellendi")
+    print("Fon takip sistemi güncellendi")
 
 
 
