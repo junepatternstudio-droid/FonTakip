@@ -1,0 +1,72 @@
+{
+  "last_update": "31.07.2026 23:55",
+  "market_liquidity": {
+    "daily_inflow": 0,
+    "daily_outflow": 0,
+    "weekly_inflow": 0,
+    "weekly_outflow": 0,
+    "net_flow": 0
+  },
+  "funds": [
+    {
+      "code": "PHE",
+      "name": "PHE",
+      "type": "Hisse Senedi",
+      "daily_inflow": 0,
+      "daily_outflow": 0,
+      "weekly_inflow": 0,
+      "weekly_outflow": 0,
+      "net_flow": 0,
+      "daily_return": 0,
+      "weekly_return": 0
+    },
+    {
+      "code": "PBR",
+      "name": "PBR",
+      "type": "Hisse Senedi",
+      "daily_inflow": 0,
+      "daily_outflow": 0,
+      "weekly_inflow": 0,
+      "weekly_outflow": 0,
+      "net_flow": 0,
+      "daily_return": 0,
+      "weekly_return": 0
+    },
+    {
+      "code": "TLY",
+      "name": "TLY",
+      "type": "Değişken Fon",
+      "daily_inflow": 0,
+      "daily_outflow": 0,
+      "weekly_inflow": 0,
+      "weekly_outflow": 0,
+      "net_flow": 0,
+      "daily_return": 0,
+      "weekly_return": 0
+    },
+    {
+      "code": "DFI",
+      "name": "DFI",
+      "type": "Fon Sepeti",
+      "daily_inflow": 0,
+      "daily_outflow": 0,
+      "weekly_inflow": 0,
+      "weekly_outflow": 0,
+      "net_flow": 0,
+      "daily_return": 0,
+      "weekly_return": 0
+    },
+    {
+      "code": "BMU",
+      "name": "BMU",
+      "type": "Değişken Fon",
+      "daily_inflow": 0,
+      "daily_outflow": 0,
+      "weekly_inflow": 0,
+      "weekly_outflow": 0,
+      "net_flow": 0,
+      "daily_return": 0,
+      "weekly_return": 0
+    }
+  ]
+}
