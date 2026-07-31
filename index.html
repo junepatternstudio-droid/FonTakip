@@ -10,57 +10,63 @@
 
 <style>
 
-body {
-    font-family: Arial, sans-serif;
-    background:#f3f4f6;
-    padding:20px;
+body{
+font-family:Arial,sans-serif;
+background:#f4f6f8;
+padding:20px;
 }
 
-.container {
-    max-width:1200px;
-    margin:auto;
+.container{
+max-width:1400px;
+margin:auto;
 }
 
-h1 {
-    text-align:center;
+h1{
+text-align:center;
 }
 
-.card-area {
-    display:flex;
-    flex-wrap:wrap;
-    gap:15px;
-    justify-content:center;
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
 }
 
-.card {
-    background:white;
-    padding:20px;
-    border-radius:12px;
-    min-width:220px;
-    box-shadow:0 2px 8px #ddd;
+.card{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 2px 8px #ddd;
 }
 
-table {
-    width:100%;
-    background:white;
-    border-collapse:collapse;
-    margin-top:20px;
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+margin-top:15px;
 }
 
-th {
-    background:#111827;
-    color:white;
-    padding:10px;
+th{
+background:#111827;
+color:white;
+padding:10px;
 }
 
-td {
-    padding:10px;
-    text-align:center;
-    border-bottom:1px solid #ddd;
+td{
+padding:10px;
+border-bottom:1px solid #ddd;
+text-align:center;
 }
 
-.section {
-    margin-top:40px;
+.green{
+color:green;
+}
+
+.red{
+color:red;
+}
+
+.section{
+margin-top:40px;
 }
 
 </style>
@@ -79,32 +85,22 @@ td {
 <p id="update"></p>
 
 
-<div class="card-area">
-
-
-<div class="card">
-<h3>Günlük Giriş</h3>
-<p id="dailyIn">-</p>
-</div>
-
+<div class="cards">
 
 <div class="card">
-<h3>Günlük Çıkış</h3>
-<p id="dailyOut">-</p>
+<h3>Günlük Net Akış</h3>
+<p id="dailyNet">-</p>
 </div>
-
 
 <div class="card">
-<h3>Haftalık Giriş</h3>
-<p id="weeklyIn">-</p>
+<h3>Haftalık Net Akış</h3>
+<p id="weeklyNet">-</p>
 </div>
-
 
 <div class="card">
-<h3>Net Akış</h3>
-<p id="netFlow">-</p>
+<h3>Likidite</h3>
+<p id="liquidity">-</p>
 </div>
-
 
 </div>
 
@@ -112,35 +108,93 @@ td {
 
 <div class="section">
 
-<h2>Fon Listesi</h2>
-
+<h2>🟢 Günlük En Çok Para Girişi</h2>
 
 <table>
 
 <thead>
-
 <tr>
-
+<th>Sıra</th>
 <th>Fon</th>
-<th>Tür</th>
-<th>Günlük Giriş</th>
-<th>Günlük Çıkış</th>
-<th>Net Akış</th>
-
+<th>Tutar</th>
 </tr>
-
 </thead>
 
-
-<tbody id="fundTable">
-
-</tbody>
-
+<tbody id="dailyIn"></tbody>
 
 </table>
 
+</div>
+
+
+
+
+<div class="section">
+
+<h2>🔴 Günlük En Çok Para Çıkışı</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Sıra</th>
+<th>Fon</th>
+<th>Tutar</th>
+</tr>
+</thead>
+
+<tbody id="dailyOut"></tbody>
+
+</table>
 
 </div>
+
+
+
+
+<div class="section">
+
+<h2>🟢 Haftalık En Çok Para Girişi</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Sıra</th>
+<th>Fon</th>
+<th>Tutar</th>
+</tr>
+</thead>
+
+<tbody id="weeklyIn"></tbody>
+
+</table>
+
+</div>
+
+
+
+
+<div class="section">
+
+<h2>🔴 Haftalık En Çok Para Çıkışı</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Sıra</th>
+<th>Fon</th>
+<th>Tutar</th>
+</tr>
+</thead>
+
+<tbody id="weeklyOut"></tbody>
+
+</table>
+
+</div>
+
 
 
 </div>
@@ -152,63 +206,71 @@ td {
 
 fetch("data.json")
 
-.then(response => response.json())
+.then(res=>res.json())
 
-.then(data => {
+.then(data=>{
 
 
 document.getElementById("update").innerHTML =
-"Son Güncelleme: " + data.last_update;
+"Son güncelleme: "+data.last_update;
 
 
-document.getElementById("dailyIn").innerHTML =
-data.market_liquidity.daily_inflow;
+document.getElementById("dailyNet").innerHTML =
+data.market_liquidity.daily_net;
 
 
-document.getElementById("dailyOut").innerHTML =
-data.market_liquidity.daily_outflow;
+document.getElementById("weeklyNet").innerHTML =
+data.market_liquidity.weekly_net;
 
 
-document.getElementById("weeklyIn").innerHTML =
-data.market_liquidity.weekly_inflow;
-
-
-document.getElementById("netFlow").innerHTML =
-data.market_liquidity.net_flow;
+document.getElementById("liquidity").innerHTML =
+data.market_liquidity.liquidity_status;
 
 
 
-let table = "";
+function createRows(list){
 
+let html="";
 
-data.funds.forEach(fund => {
+list.forEach(item=>{
 
-
-table += `
+html += `
 
 <tr>
 
-<td>${fund.code}</td>
+<td>${item.rank}</td>
 
-<td>${fund.type}</td>
+<td>${item.code}</td>
 
-<td>${fund.daily_inflow}</td>
-
-<td>${fund.daily_outflow}</td>
-
-<td>${fund.net_flow}</td>
-
+<td>${item.amount}</td>
 
 </tr>
 
-
 `;
-
 
 });
 
+return html;
 
-document.getElementById("fundTable").innerHTML = table;
+}
+
+
+
+document.getElementById("dailyIn").innerHTML =
+createRows(data.daily_top_inflow);
+
+
+document.getElementById("dailyOut").innerHTML =
+createRows(data.daily_top_outflow);
+
+
+document.getElementById("weeklyIn").innerHTML =
+createRows(data.weekly_top_inflow);
+
+
+document.getElementById("weeklyOut").innerHTML =
+createRows(data.weekly_top_outflow);
+
 
 
 });
