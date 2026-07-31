@@ -6,7 +6,6 @@ import urllib.request
 DATA_FILE = "data.json"
 
 
-
 def load_data():
 
     with open(DATA_FILE, "r", encoding="utf-8") as f:
@@ -26,20 +25,38 @@ def save_data(data):
 
 
 
-def get_market_status():
+def get_tefas_data():
 
-    return {
+    """
+    TEFAS veri bağlantısı için başlangıç bölümü.
+    Veri alınamadığında boş liste döndürür.
+    """
 
-        "daily_inflow": 0,
-        "daily_outflow": 0,
-        "weekly_inflow": 0,
-        "weekly_outflow": 0,
-        "monthly_inflow": 0,
-        "monthly_outflow": 0,
-        "net_flow": 0,
-        "liquidity_status": "Veri bağlantısı hazırlanıyor"
+    try:
 
-    }
+        url = "https://www.tefas.gov.tr"
+
+        request = urllib.request.Request(
+            url,
+            headers={
+                "User-Agent": "Mozilla/5.0"
+            }
+        )
+
+
+        urllib.request.urlopen(
+            request,
+            timeout=10
+        )
+
+
+        # Gerçek veri ayrıştırma sonraki aşamada eklenecek.
+        return []
+
+
+    except Exception:
+
+        return []
 
 
 
@@ -53,13 +70,25 @@ def update_system():
     )
 
 
-    data["market_liquidity"] = get_market_status()
+    funds = get_tefas_data()
+
+
+    data["tefas_status"] = {
+
+        "connection": "OK" if funds else "Bekliyor",
+
+        "fund_count": len(funds)
+
+    }
+
+
+    data["funds"] = funds
 
 
     save_data(data)
 
 
-    print("Fon takip sistemi güncellendi")
+    print("TEFAS bağlantı testi tamamlandı")
 
 
 
