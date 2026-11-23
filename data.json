@@ -1,5 +1,5 @@
 {
-  "last_update": "22.11.2026 01:52",
+  "last_update": "23.11.2026 02:10",
   "market_liquidity": {
     "daily_inflow": 0,
     "daily_outflow": 0,
@@ -30,6 +30,6 @@
   },
   "tefas_debug": {
     "length": 245,
-    "sample": "<html><head><title>Request Rejected</title></head><body>The requested URL was rejected. Please consult with your administrator.<br><br>Your support ID is: <13545013568349227720><br><br><a href='javascript:history.back();'>[Go Back]</body></html>"
+    "sample": "<html><head><title>Request Rejected</title></head><body>The requested URL was rejected. Please consult with your administrator.<br><br>Your support ID is: <13545013568783017871><br><br><a href='javascript:history.back();'>[Go Back]</body></html>"
   }
 }
